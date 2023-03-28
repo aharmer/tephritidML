@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - bzip2=1.0.8=h8ffe710_4
   - ca-certificates=2022.12.7=h5b45459_0
   - certifi=2022.12.7=pyhd8ed1ab_0
   - cudatoolkit=11.2.2=h933977f_10
@@ -13,71 +14,115 @@ dependencies:
   - python=3.8.15=h6244533_2
   - setuptools=65.5.0=py38haa95532_0
   - sqlite=3.40.0=h2bbff1b_0
+  - tk=8.6.12=h8ffe710_0
+  - tzdata=2022g=h191b570_0
   - vc=14.2=h21ff451_1
   - vs2015_runtime=14.27.29016=h5e58377_2
   - wheel=0.37.1=pyhd3eb1b0_0
   - wincertstore=0.2=py38haa95532_2
+  - xz=5.2.6=h8d14728_0
   - pip:
-      - absl-py==1.3.0
-      - astunparse==1.6.3
-      - cachetools==5.2.0
-      - charset-normalizer==2.1.1
-      - contourpy==1.0.7
-      - cycler==0.11.0
-      - datetime==4.8
-      - flatbuffers==22.12.6
-      - fonttools==4.38.0
-      - gast==0.4.0
-      - google-auth==2.15.0
-      - google-auth-oauthlib==0.4.6
-      - google-pasta==0.2.0
-      - grpcio==1.51.1
-      - h5py==3.7.0
-      - idna==3.4
-      - importlib-metadata==5.2.0
-      - importlib-resources==5.12.0
-      - imutils==0.5.4
-      - joblib==1.2.0
-      - keras==2.10.0
-      - keras-preprocessing==1.1.2
-      - kiwisolver==1.4.4
-      - libclang==14.0.6
-      - markdown==3.4.1
-      - markupsafe==2.1.1
-      - matplotlib==3.7.0
-      - numpy==1.24.0
-      - oauthlib==3.2.2
-      - opencv-contrib-python==4.7.0.72
-      - opt-einsum==3.3.0
-      - packaging==22.0
-      - pandas==1.5.3
-      - pillow==9.3.0
-      - protobuf==3.19.6
-      - pyasn1==0.4.8
-      - pyasn1-modules==0.2.8
-      - pyparsing==3.0.9
-      - python-dateutil==2.8.2
-      - pytz==2022.7
-      - requests==2.28.1
-      - requests-oauthlib==1.3.1
-      - rsa==4.9
-      - scikit-learn==1.2.1
-      - scipy==1.9.3
-      - six==1.16.0
-      - tensorboard==2.10.1
-      - tensorboard-data-server==0.6.1
-      - tensorboard-plugin-wit==1.8.1
-      - tensorflow==2.10.0
-      - tensorflow-estimator==2.10.0
-      - tensorflow-gpu==2.10.1
-      - tensorflow-io-gcs-filesystem==0.29.0
-      - termcolor==2.1.1
-      - threadpoolctl==3.1.0
-      - typing-extensions==4.4.0
-      - urllib3==1.26.13
-      - uuid==1.30
-      - werkzeug==2.2.2
-      - wrapt==1.14.1
-      - zipp==3.11.0
-      - zope-interface==5.5.2
-prefix: C:\Users\harmera\.conda\envs\teph_py38
+    - absl-py==1.3.0
+    - asttokens==2.2.1
+    - astunparse==1.6.3
+    - attrs==22.2.0
+    - backcall==0.2.0
+    - beautifulsoup4==4.11.2
+    - bleach==6.0.0
+    - cachetools==5.2.0
+    - chardet==3.0.4
+    - charset-normalizer==2.1.1
+    - colorama==0.4.6
+    - contourpy==1.0.7
+    - cycler==0.11.0
+    - datetime==4.8
+    - decorator==5.1.1
+    - defusedxml==0.7.1
+    - entrypoints==0.4
+    - executing==1.2.0
+    - fastjsonschema==2.16.3
+    - flatbuffers==22.12.6
+    - fonttools==4.38.0
+    - gast==0.4.0
+    - google-auth==1.4.2
+    - google-auth-oauthlib==0.4.6
+    - google-pasta==0.2.0
+    - grpcio==1.51.1
+    - h5py==3.7.0
+    - idna==2.8
+    - importlib-metadata==5.2.0
+    - importlib-resources==5.12.0
+    - ipython==8.11.0
+    - ipython-genutils==0.2.0
+    - jedi==0.18.2
+    - jinja2==3.1.2
+    - joblib==1.2.0
+    - jsonschema==4.17.3
+    - jupyter-core==5.2.0
+    - jupyterlab-pygments==0.2.2
+    - keract==4.5.1
+    - keras==2.10.0
+    - keras-preprocessing==1.1.2
+    - kiwisolver==1.4.4
+    - libclang==14.0.6
+    - markdown==3.4.1
+    - markupsafe==2.1.1
+    - matplotlib==3.7.0
+    - matplotlib-inline==0.1.6
+    - mistune==2.0.5
+    - nest-asyncio==1.5.6
+    - numpy==1.24.0
+    - oauthlib==3.2.2
+    - opencv-contrib-python==4.7.0.72
+    - opt-einsum==3.3.0
+    - packaging==22.0
+    - pandas==1.5.3
+    - pandocfilters==1.5.0
+    - parso==0.8.3
+    - pickleshare==0.7.5
+    - pillow==9.3.0
+    - pkgutil-resolve-name==1.3.10
+    - platformdirs==3.0.0
+    - portpicker==1.2.0
+    - prompt-toolkit==1.0.18
+    - protobuf==3.19.6
+    - pure-eval==0.2.2
+    - pyasn1==0.4.8
+    - pyasn1-modules==0.2.8
+    - pygments==2.14.0
+    - pyparsing==3.0.9
+    - pyrsistent==0.19.3
+    - python-dateutil==2.8.2
+    - pytz==2022.7
+    - pywin32==305
+    - pyzmq==25.0.0
+    - requests==2.21.0
+    - requests-oauthlib==1.3.1
+    - rsa==4.9
+    - scikit-learn==1.2.1
+    - scipy==1.9.3
+    - simplegeneric==0.8.1
+    - six==1.12.0
+    - soupsieve==2.4
+    - stack-data==0.6.2
+    - tensorboard==2.10.1
+    - tensorboard-data-server==0.6.1
+    - tensorboard-plugin-wit==1.8.1
+    - tensorflow==2.10.0
+    - tensorflow-estimator==2.10.0
+    - tensorflow-io-gcs-filesystem==0.29.0
+    - termcolor==2.1.1
+    - threadpoolctl==3.1.0
+    - tinycss2==1.2.1
+    - tornado==4.5.3
+    - traitlets==5.9.0
+    - typing-extensions==4.4.0
+    - urllib3==1.24.3
+    - uuid==1.30
+    - wcwidth==0.2.6
+    - webencodings==0.5.1
+    - werkzeug==2.2.2
+    - wrapt==1.14.1
+    - zipp==3.11.0
+    - zope-interface==5.5.2
+prefix: C:\Users\HarmerA\Miniconda3\envs\teph_py38
