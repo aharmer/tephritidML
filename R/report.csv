@@ -1,0 +1,33 @@
+class,precision,recall,f1-score,support
+austrotephritis_cassiniae,0.8,1,0.89,4
+austrotephritis_marginata,1,1,1,3
+austrotephritis_plebeia,1,0.75,0.86,4
+austrotephritis_thoracica,1,1,1,3
+bactrocera_curcubitae,1,0.75,0.86,4
+bactrocera_facialis,0.33,0.33,0.33,3
+bactrocera_frauenfeldi,1,0.5,0.67,2
+bactrocera_kirki,0,0,0,2
+bactrocera_passiflorae,0,0,0,4
+bactrocera_psidii,0,0,0,2
+bactrocera_tryoni,0,0,0,2
+bactrocera_umbrosus,1,0.5,0.67,2
+bactrocera_xanthodes,0.27,1,0.42,4
+ceratitis_capitata,1,1,1,4
+ceratitis_rosa,1,1,1,1
+dacus_distinctus,0.44,1,0.62,4
+dacus_dorsalis,0.67,0.67,0.67,3
+dacus_melanotus,0,0,0,3
+procecidochares_alani,0.67,0.5,0.57,4
+procecidochares_utilis,1,0.67,0.8,3
+sphenella_fascigera,1,0.75,0.86,4
+trupanea_alboapicata,0,0,0,1
+trupanea_centralis,0.4,0.67,0.5,3
+trupanea_extensa,0,0,0,2
+trupanea_fenwicki,1,1,1,5
+trupanea_longipennis,0.67,1,0.8,2
+urophora_cardui,0.67,1,0.8,4
+urophora_solstitialis,0.75,1,0.86,3
+urophora_stylata,1,1,1,4
+accuracy,NA,NA,0.69,89
+macro avg,0.61,0.62,0.59,89
+weighted avg,0.65,0.69,0.64,89

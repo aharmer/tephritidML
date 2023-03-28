@@ -1,0 +1,33 @@
+ACTUAL/PREDICTED         	austrotephritis_cassiniae	austrotephritis_marginata	austrotephritis_plebeia	austrotephritis_thoracica	bactrocera_curcubitae	bactrocera_facialis	bactrocera_frauenfeldi	bactrocera_kirki	bactrocera_passiflorae	bactrocera_psidii	bactrocera_tryoni	bactrocera_umbrosus	bactrocera_xanthodes	ceratitis_capitata	ceratitis_rosa	dacus_distinctus	dacus_dorsalis	dacus_melanotus	procecidochares_alani	procecidochares_utilis	sphenella_fascigera	trupanea_alboapicata	trupanea_centralis	trupanea_extensa	trupanea_fenwicki	trupanea_longipennis	urophora_cardui	urophora_solstitialis	urophora_stylata	RECALL
+austrotephritis_cassiniae     	9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0.900
+austrotephritis_marginata     	0	8	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+austrotephritis_plebeia       	3	0	4	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0	0	0	0.400
+austrotephritis_thoracica     	0	0	1	4	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	2	0	0	0	0	0	0	0.500
+bactrocera_curcubitae         	0	0	0	0	9	0	0	0	0	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0.818
+bactrocera_facialis           	0	0	0	0	0	4	0	0	0	0	0	0	3	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0.444
+bactrocera_frauenfeldi        	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	4	0	0	0	0	0	0	0	0	0	0	0	0	0	0.000
+bactrocera_kirki              	0	0	0	0	0	0	0	0	1	0	0	0	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.000
+bactrocera_passiflorae        	0	0	0	0	0	3	0	0	1	0	0	0	5	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0.100
+bactrocera_psidii             	0	0	0	0	0	1	0	0	1	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0.000
+bactrocera_tryoni             	0	0	0	0	0	0	0	0	0	0	3	0	1	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0.500
+bactrocera_umbrosus           	0	0	0	0	0	0	0	0	0	0	0	1	0	1	0	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0.200
+bactrocera_xanthodes          	0	0	0	0	0	0	0	0	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+ceratitis_capitata            	0	0	0	0	0	0	0	0	0	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+ceratitis_rosa                	0	0	0	0	0	0	0	0	0	0	0	0	0	0	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+dacus_distinctus              	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+dacus_dorsalis                	0	0	0	0	0	2	0	0	0	0	1	0	0	0	0	4	2	0	0	0	0	0	0	0	0	0	0	0	0	0.222
+dacus_melanotus               	0	0	0	0	0	1	0	0	0	0	1	0	5	0	0	2	0	0	0	0	0	0	0	0	0	0	0	0	0	0.000
+procecidochares_alani         	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	5	0	0	0	0	0	0	0	5	0	0	0.500
+procecidochares_utilis        	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	5	0	0	0	0	0	0	1	0	1	0.556
+sphenella_fascigera           	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	8	0	0	0	0	0	0	1	0	0.800
+trupanea_alboapicata          	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0.000
+trupanea_centralis            	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0	4	3	0	0	0	0	0	0.444
+trupanea_extensa              	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	1	0	1	0	0	0	0.250
+trupanea_fenwicki             	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	10	1	0	0	0	0.769
+trupanea_longipennis          	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	5	0	0	0	1.000
+urophora_cardui               	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	10	0	0	1.000
+urophora_solstitialis         	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	8	0	1.000
+urophora_stylata              	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	10	1.000
+PRECISION                	0.750	1.000	0.800	0.800	0.900	0.364	0.000	0.000	0.333	0.000	0.600	1.000	0.370	0.909	1.000	0.323	0.333	0.000	0.714	1.000	0.667	0.000	0.364	0.250	1.000	0.714	0.625	0.889	0.909
+
+correct: 144 (62.61%) incorrect: 86

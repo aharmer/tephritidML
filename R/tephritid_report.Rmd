@@ -131,7 +131,7 @@ kableExtra::kable(report) %>%
 ### Incorrect identifications during validation
 The 78 images in the table below were incorrectly identified during validation.
 ``` {r message = FALSE}
-misID = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/wrong_predictions.csv") %>% as.data.frame()
+misID = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/R/wrong_predictions.csv") %>% as.data.frame()
 id = strsplit(misID[,1], "\\\\")
 assc = c()
 for (i in 1:length(id)) {
