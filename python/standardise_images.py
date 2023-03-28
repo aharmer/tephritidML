@@ -156,23 +156,23 @@ def main():
     # standardise_image(IN_PATH, OUT_PATH, size=299)
     
     # Standardise all images
-    # IN_PATH = "D:/Dropbox/data/tephritidae/images_raw/UNZspecies"
-    # OUT_PATH = "D:/Dropbox/data/tephritidae/images_standardised"
+    # IN_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/images_raw/UNZspecies"
+    # OUT_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_unk/"
     # standardise_images(IN_PATH, OUT_PATH, size=299)
 
     # Reorganise the images into class folders
-    # IN_PATH = "D:/Dropbox/data/tephritidae/images_standardised"
-    # OUT_PATH = "D:/Dropbox/data/tephritidae/images_sorted"
-    # INDEX_FILE = "D:/Dropbox/data/tephritidae/tephritid_annotation.csv"
-    # LABEL_NAME = 'fullName'
-    # reorg_folders(IN_PATH, OUT_PATH, INDEX_FILE, LABEL_NAME)
+    IN_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_unk"
+    OUT_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_unk_sort/"
+    INDEX_FILE = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/fruitfly_annotationfile_unk.csv"
+    LABEL_NAME = 'fullName'
+    reorg_folders(IN_PATH, OUT_PATH, INDEX_FILE, LABEL_NAME)
     
-    # Create a 2/3 - 1/3 fold
-    IN_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/images_sorted'
-    OUT_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_folds_3/3'
-    FOLDS = 3
-    FOLD = 3
-    create_fold(IN_PATH, OUT_PATH, FOLDS, FOLD)    
+    # # Create a 2/3 - 1/3 fold
+    # IN_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_sort'
+    # OUT_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_fold/1'
+    # FOLDS = 3
+    # FOLD = 1
+    # create_fold(IN_PATH, OUT_PATH, FOLDS, FOLD)    
     
     
 if (__name__ == '__main__'):

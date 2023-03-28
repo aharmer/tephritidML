@@ -244,6 +244,115 @@ def retrain(model_name, train_data_dir, valid_data_dir, model_dir, log_dir, data
   print("Done. Model saved to {}".format(model_file_name))
   return model_file_name
 
+def retrain_final(model_name, train_data_dir, model_dir, log_dir, dataset_name, 
+            epochs = 200, batch_size = 16, lr = 1e-4, fine_tune = True, patience = 30):
+  """
+  learns a new domain from an imagenet network
+  """
+
+  print("Retraining an Imagenet network for dataset '{}'".format(dataset_name))
+  print("  Training data:", train_data_dir)
+  print("  Model save dir:", model_dir)
+  print("  Model log dir:", log_dir)
+  print("  Model:", model_name)
+  print("  Epochs:", epochs)
+  print("  Batch size:", batch_size)
+  print("  Learning rate:", lr)
+  print("  Fine_tune:", fine_tune)
+
+  num_classes = len(os.listdir(train_data_dir))
+  
+
+  if model_name == 'InceptionV3':
+    freeze_between = Freeze.inception_v3.value
+    image_size = Input_Size.inception_v3.value
+    image_shape = image_size + (3,)
+    base_model = InceptionV3(include_top = False, weights = 'imagenet', input_shape = image_shape)
+  elif model_name == 'Xception':
+    freeze_between = Freeze.xception.value
+    image_size = Input_Size.xception.value
+    image_shape = image_size + (3,)
+    base_model = Xception(include_top = False, weights = 'imagenet', input_shape = image_shape)
+  elif model_name == 'MobileNet':
+    freeze_between = Freeze.mobilenet.value
+    image_size = Input_Size.mobilenet.value
+    image_shape = image_size + (3,)
+    base_model = MobileNet(include_top = False, weights = 'imagenet', input_shape = image_shape)
+  else:
+    print("ERROR: Unknown model {}: supported models are 'InceptionV3', 'MobileNet' and 'Xception'".format(model_name))
+    return None
+
+  # Create and randomly initialize the dense top layer
+  x = base_model.output
+  x = GlobalAveragePooling2D()(x)
+
+  predictions = Dense(num_classes, activation = 'softmax')(x)
+
+  model = Model(inputs = base_model.inputs, outputs = predictions)
+
+  # Retraining: freeze all layers except the new head
+  for i in range(freeze_between[0], freeze_between[1]):
+    model.layers[i].trainable = False 
+    
+  # compile model for training 
+  model.compile(optimizer = tf.keras.optimizers.Adam(lr), loss = 'categorical_crossentropy', metrics = ['accuracy'])
+  model.summary()
+  
+  # define data generators
+  # Set the augmentations. Small datasets need to be aggressive...
+  # TODO: should be passed in by caller...
+
+  # Minor augmentation (for wasps)
+  train_datagen = ImageDataGenerator(preprocessing_function = preprocess_input, # scales to -1...1 for Xception
+                                     rotation_range = 25, # Some are tilted (prev 25)
+                                     width_shift_range = 0.1,
+                                     height_shift_range = 0.1,
+                                     zoom_range = 0.1,
+                                     # brightness_range = (0.5,1.5)
+                                     # channel_shift_range = 20, # [0..255] # not for monochrome
+                                     )
+
+                                     
+  #valid_datagen = ImageDataGenerator(rescale = 1./255)
+  # valid_datagen = ImageDataGenerator(preprocessing_function = preprocess_input)
+
+  train_generator = train_datagen.flow_from_directory(train_data_dir, target_size = image_size, batch_size = batch_size)
+  # valid_generator = valid_datagen.flow_from_directory(valid_data_dir, target_size = image_size, batch_size = batch_size)
+    
+  # refit model and return
+  print("Retraining {} model...".format(model_name))
+
+  early_stopping_monitor = EarlyStopping(monitor = 'accuracy', verbose = 1, patience = patience)
+  log_file_name = os.path.join(log_dir, '{}_{}_final_transfer_earlyStop_log.csv'.format(dataset_name, model_name))
+  csv_logger = CSVLogger(log_file_name)
+  callbacks = [early_stopping_monitor, csv_logger]
+  model.fit(train_generator, epochs = epochs, callbacks = callbacks)
+
+  # Fine-tune the lower layers (if required)
+  if fine_tune:
+    # Set the number of fine-tune epochs and learning rate. TODO - is there a smart way to tune this?
+    fine_tune_epochs = epochs
+    fine_tune_lr = lr/10
+
+    print("Fine-tuning the {} network for a further {} epochs with lr = {}".format(model_name, fine_tune_epochs, fine_tune_lr))
+    for i in range(freeze_between[0], freeze_between[1]):
+      model.layers[i].trainable = True   
+
+    model.compile(optimizer = tf.keras.optimizers.Adam(fine_tune_lr), loss = 'categorical_crossentropy', metrics = ['accuracy'])     
+    model.fit(train_generator, epochs = fine_tune_epochs, callbacks = callbacks)
+  else:
+    print("Fine-tuning NOT REQUESTED")
+
+  # Save the model to disk
+  model_file_name = os.path.join(model_dir, '{}_{}_transfer.h5'.format(dataset_name, model_name))
+  model.save(model_file_name)
+
+  # All done, clear keras' global state to avoid memory leaks
+  K.clear_session()
+  
+  print("Done. Model saved to {}".format(model_file_name))
+  return model_file_name
+
 
 def run_model(model_path, labels_path, test_images_path, model_name, ignore = None, model = None, reset = False):
   """
@@ -285,7 +394,7 @@ def run_model(model_path, labels_path, test_images_path, model_name, ignore = No
 
   print('Predicting image classes...')
   data_generator = datagen.flow_from_directory(test_images_path, target_size = image_size, shuffle = False, batch_size = 1)
-  predictions = model.predict_generator(data_generator, steps = len(image_files)) # TODO - use glob to get the number of images
+  predictions = model.predict(data_generator, steps = len(image_files)) # TODO - use glob to get the number of images
   print('Prediction complete.')
   # All done, clear keras' global state to avoid memory leaks
   if reset:
@@ -341,6 +450,44 @@ def test_model(model_path, labels_path, test_images_path, model_name, ignore = N
 
   print("\nResults for model {} ({}) on {} ({} images):".format(model_path, model_name, test_images_path, len(image_files)))
   print('\nCORRECT: {0} ({1:.2f})%  WRONG: {2} ({3:.2f})%'.format(correct, 100* correct/(correct + wrong), wrong, 100* wrong/(correct + wrong))) 
+  print('---------------------------------------------------------------------------------------------------------')
+  
+  # All done, clear keras' global state to avoid memory leaks
+  K.clear_session()
+
+  return labels, answers
+
+
+def predict_new(model_path, labels_path, test_images_path, model_name, ignore = None):
+  """
+  Predict the ID of a folder of images. 
+  
+  """
+
+  labels, predictions, image_files, model = run_model(model_path, labels_path, test_images_path, model_name, ignore)
+
+  answers = []
+  
+  print('\nResults:')
+  print('---------------------------------------------------------------------------------------------------------')
+  print("Classes: {}".format(labels))
+  for file_num, p in enumerate(predictions):
+    best = 0
+    second = 0
+    best_index = -1
+    for i, pr in enumerate(p):
+      if (not ignore) or (i !=  ignore): # ignore one class (e.g. "empty")
+        if pr > best:
+          second = best
+          best = pr
+          best_index = i
+        elif pr > second:
+          second = pr
+    file_path = os.path.relpath(image_files[file_num], test_images_path)
+    filename = os.path.basename(file_path)
+    class_name = os.path.dirname(file_path)
+    answers.append((class_name, labels[best_index], best, best/second, image_files[file_num], p)) # (actual, predicted)
+    print('Prediction for {}: => {} {} ({})'.format(file_path, labels[best_index], best, best/second))
   print('---------------------------------------------------------------------------------------------------------')
   
   # All done, clear keras' global state to avoid memory leaks
