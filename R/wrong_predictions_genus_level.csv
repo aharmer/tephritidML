@@ -1,0 +1,8 @@
+file,actual,predicted,score
+dacus\NZAC04254430_Dacus_dorsalis_wing.png,dacus,bactrocera,0.945804536
+bactrocera\NZAC04254420_Bactrocera_curcubitae_wing.png,bactrocera,dacus,0.832114518
+bactrocera\NZAC04254506_Bactrocera_psidii_wing.png,bactrocera,dacus,0.696058989
+dacus\NZAC04254482_Dacus_melanotus_wing.png,dacus,bactrocera,0.859728217
+dacus\NZAC04254435_Dacus_dorsalis_wing.png,dacus,bactrocera,0.713701546
+dacus\NZAC04254483_Dacus_melanotus_wing.png,dacus,bactrocera,0.809663534
+trupanea\NZAC04254411.png,trupanea,austrotephritis,0.596289158

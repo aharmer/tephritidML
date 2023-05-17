@@ -1,5 +1,8 @@
 models/
 python/exp
+unused/
+img/bactrocera_model
+img/trupanea_model
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

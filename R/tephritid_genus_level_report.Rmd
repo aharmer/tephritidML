@@ -1,0 +1,237 @@
+---
+title: "Tephritid species identification using CNN"
+author: "Aaron Harmer"
+date: "`r Sys.Date()`"
+output: 
+  html_document: 
+    toc: yes
+    fig_caption: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r message = FALSE, warning = FALSE}
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load(tidyverse, pander, patchwork, terra, viridis, reticulate)
+
+source_python("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/python/train_test_functions.py")
+# py = py_run_file("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/python/exp/act_maps2.py")
+
+dat1 = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/logs/tephritid_species_v4_1_Xception_200_epoch_transfer_earlyStop_log.csv") %>% 
+  pivot_longer(!epoch, names_to = "stat", values_to = "value")
+dat2 = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/logs/tephritid_species_v4_2_Xception_200_epoch_transfer_earlyStop_log.csv") %>% 
+  pivot_longer(!epoch, names_to = "stat", values_to = "value")
+dat3 = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/logs/tephritid_species_v4_3_Xception_200_epoch_transfer_earlyStop_log.csv") %>% 
+  pivot_longer(!epoch, names_to = "stat", values_to = "value")
+```
+
+## Summary
+A convolution neural network was trained via transfer learning to identify Tephritidae genera using wing images. After initial poor results classifying images at the species level (66% accuracy), the model was retrained to classify images at the genus level. Threefold cross-validation was used to achieve an accuracy of 99% (667/674) at predicting class. The image set comprised 674 images in 8 classes. The image set was sorted into three folds using stratified round-robin cross-validation. Each set had a 2/3 training, 1/3 test split. Classes were defined by genus name.
+
+### Image pre-processing
+Images were prepared by:
+
+* Converting colour images to grayscale
+* Blurring to reduce image grain noise
+* Standardising brightness and contrast to mean = 0.5, contrast range = ±2 standard deviations, with the extreme values clipped
+* Squashing and downsampling to 299 by 299 pixels to match the network input filter size
+
+<br>
+
+### Model training
+Transfer learning was used to retrain an Xception model initially trained on the Imagenet dataset. The model was retrained three times, each run was initially set for 200 epochs but with an early-stopping callback and learning rate of 1e-04. Each model was fine-tuned at a learning rate of 1e-05, again with early-stopping set.
+
+Images were augmented to prevent over-fitting and increase the robustness of the model to variation in additional images added later. Image augmentations included:
+
+* Random horizontal and vertical shift up to 10%
+* Random zoom up to ±10%
+* Random rotation up to ±25 degrees
+
+<br>
+
+## Results
+
+The model achieved an average accuracy of 99% (667 correct/7 wrong) across the three runs. Each model stopped before reaching 200 epochs with accuracy and loss both plateauing (Figure 1).
+
+<br>
+
+```{r warning = FALSE, fig.width = 12, fig.cap = "Fig. 1: Accuracy and loss of the three cross-validated Xception models after 30 epochs.", fig.align="center"}
+acc_plot = dat1 %>% 
+  filter(stat == "accuracy" | stat == "val_accuracy") %>% 
+  ggplot(aes(x = epoch, y = value, colour = stat)) +
+    geom_line(linewidth = 1) +
+    geom_line(data = subset(dat2, stat == "accuracy" | stat == "val_accuracy"), aes(x = epoch, y = value, colour = stat), linewidth = 1) +
+    geom_line(data = subset(dat3, stat == "accuracy" | stat == "val_accuracy"), aes(x = epoch, y = value, colour = stat), linewidth = 1) +
+    scale_colour_manual(labels = c("Training accuracy", "Validation accuracy"), values = c("#70ad47", "#4472c4")) +
+    ylim(c(0.75,1)) +
+    xlab("\nEpoch") +
+    ylab("Accuracy\n") +
+    theme_classic(base_size = 16) +
+    theme(legend.title = element_blank(), legend.position = c(0.75, 0.25))
+
+loss_plot = dat1 %>% 
+  filter(stat == "loss" | stat == "val_loss") %>% 
+  ggplot(aes(x = epoch, y = value, colour = stat)) +
+    geom_line(linewidth = 1) +
+    geom_line(data = subset(dat2, stat == "loss" | stat == "val_loss"), aes(x = epoch, y = value, colour = stat), linewidth = 1) +
+    geom_line(data = subset(dat3, stat == "loss" | stat == "val_loss"), aes(x = epoch, y = value, colour = stat), linewidth = 1) +
+    scale_colour_manual(labels = c("Training loss", "Validation loss"), values = c("#70ad47", "#4472c4")) +
+    xlab("\nEpoch") +
+    ylab("Loss\n") +
+    theme_classic(base_size = 16) +
+    theme(legend.title = element_blank(), legend.position = c(0.75, 0.75))
+
+acc_plot|loss_plot
+```
+
+<br>
+
+### Classification report for each class
+Validation accuracy varied greatly between classes, which was to be expected given the low overall validation accuracy and very small dataset.
+``` {python include = FALSE}
+# from sklearn.metrics import classification_report
+# from pandas import DataFrame
+# 
+# DATASET_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/'
+# model_dir = DATASET_PATH + 'models/'
+# model_file = model_dir + 'tephritid_species_v4_1_Xception_transfer.h5'
+# model_name = 'Xception'
+# labels_path = DATASET_PATH + 'genera.csv'
+# images_path = DATASET_PATH + 'img_folds_3/1/'
+# test_data_dir = images_path + 'val/'
+# 
+# answers = test_model(model_file, labels_path, test_data_dir, model_name)
+# 
+# predicted = [tup[1] for tup in answers[1]]
+# y_test = [tup[0] for tup in answers[1]]
+# 
+# report = classification_report(y_test, predicted, output_dict = True)
+# report = DataFrame(report).transpose()
+```
+
+``` {r message = FALSE}
+# report = py$report
+# report[9,] = c(NA, NA, 0.99, 229)  #Because of blank line for global accuracy in report?
+# report = report %>%
+#   rownames_to_column(var = "class") %>%
+#   mutate_if(is.numeric, round, digits = 2)
+# write_csv(report, "C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/R/report_genus_level.csv")
+report = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/R/report_genus_level.csv")
+# pander(report)
+kableExtra::kable(report) %>% 
+          kableExtra::kable_styling(full_width = FALSE)
+```
+
+<br>
+
+### Incorrect identifications during validation
+The 7 images in the table below were incorrectly identified during validation.
+``` {r message = FALSE}
+misID = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/R/wrong_predictions_genus_level.csv") %>% as.data.frame()
+id = strsplit(misID[,1], "\\\\")
+assc = c()
+for (i in 1:length(id)) {
+  name = strsplit(id[[i]][2], "_")[[1]][1]
+  assc = c(assc, name)
+}
+misID = data.frame(ID = assc, misID[,2:4])
+misID[7,1] = "NZAC04254411"
+# kableExtra::kable(misID) %>% 
+          # kableExtra::kable_styling(full_width = FALSE)
+```
+
+<!-- <br> -->
+
+<!-- ### Predictions for unknown *Trupanea* species. -->
+<!-- A final model was retrained using the entire image set (i.e. no training/validation split). The model was then applied to 444 images of unidentified *Trupanea* species. As expected, the model performed poorly for many images. The table below shows the model predictions for the novel image set, with the wing image being tested compared against an example of the predicted species identification. -->
+``` {r include = FALSE}
+DATASET_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/'
+model_dir = paste0(DATASET_PATH, 'models/')
+# <!-- model_name = 'Xception' -->
+# <!-- labels_path = paste0(DATASET_PATH, 'tephritid_annotation.csv') -->
+model_path = paste0(model_dir, 'tephritid_species_v4_1_Xception_transfer.h5')
+# <!-- test_images_path = paste0(DATASET_PATH, 'img_unk_sort/') -->
+# <!-- #  -->
+# <!-- # preds = predict_new(model_path, labels_path, test_images_path, model_name) -->
+# 
+# <!-- # tab = c() -->
+# <!-- # for (i in 1:length(preds[[2]])) { -->
+# <!-- #   vals = unlist(preds[[2]][[i]][c(5,2:4)]) -->
+# <!-- #   tab = rbind(tab, vals) -->
+# <!-- # } -->
+# <!-- # tab = as.data.frame(tab, row.names = FALSE) -->
+# <!-- # names(tab) = c("file", "predicted_id", "prediction_score", "prediction_margin") -->
+# <!-- tab = read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/R/predictions.csv") %>%  -->
+# <!--   as.data.frame() -->
+# 
+# <!-- test_imgs = list.files(paste0(test_images_path, "trupanea"), full.names = TRUE) -->
+path = 'C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/images_sorted'
+subdirs = tibble(class = list.dirs(path, recursive = FALSE, full.names = FALSE), path = list.dirs(path, recursive = FALSE))
+filenames = subdirs %>%
+   mutate(first_file = map_chr(path, ~list.files(.x, full.names = TRUE)[1]))
+```
+
+``` {r}
+# prediction_table = c()
+# for (i in 1:nrow(tab)) {
+#   test_file = tab[i,1]
+#   prediction_exemplar_file = filenames[,3][filenames[,1] == tab[i,2]]
+#   test_img = paste0(pandoc.image.return(test_file), "{width=100px}")
+#   prediction_exemplar_img = paste0(pandoc.image.return(prediction_exemplar_file), "{width=100px}")
+#   row = cbind(file = strsplit(test_file, "\\\\")[[1]][3], tab[i,2:4], test_img, prediction_exemplar_img)
+#   prediction_table = rbind(prediction_table, row)
+# }
+# # pander(prediction_table)
+# kableExtra::kable(prediction_table) %>%
+#           kableExtra::kable_styling(full_width = FALSE)
+
+misFile = c()
+for (i in 1:length(id)) {
+  file = paste0('C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/images_sorted/', id[[i]][1], "/", id[[i]][2])
+  misFile = c(misFile, file)
+}
+
+prediction_table = c()
+for (i in 1:nrow(misID)) {
+  test_file = misFile[i]
+  prediction_exemplar_file = filenames[,3][filenames[,1] == misID[i,2]]
+  test_img = paste0(pandoc.image.return(test_file), "{width=100px}")
+  prediction_exemplar_img = paste0(pandoc.image.return(prediction_exemplar_file), "{width=100px}")
+  row = cbind(file = strsplit(test_file, "/")[[1]][10], misID[i,2:4], test_img, prediction_exemplar_img)
+  prediction_table = rbind(prediction_table, row)
+}
+# pander(prediction_table)
+kableExtra::kable(prediction_table) %>%
+          kableExtra::kable_styling(full_width = FALSE)
+```
+
+<br>
+
+### Representative activation maps for each class
+Value for each species is the training accuracy. I am uncertain how to interpret the activation maps. While the wing itself appears to be the most salient object in each image, attention to the finer details within each wing may be needed for better model performance. Is this a result of the small dataset?
+
+<br>
+
+``` {r warning = FALSE, message = FALSE, figures-side, fig.show="hold", out.width="50%"}
+source_python('C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/python/exp/act_maps.py')
+
+labels = as.vector(unlist(read_csv("C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/genera.csv", col_names = FALSE)))
+
+for (i in 1:nrow(filenames)) {
+  heatmap = activation(model_path, as.character(filenames[i,3]))
+  idx = which.max(heatmap[[1]])
+  name = labels[idx]
+  p = paste0(round(max(heatmap[[1]]) * 100, digits = 1), "%")
+  
+  flattened = (heatmap[[2]][,,1]*0.3) + (heatmap[[2]][,,2]*0.59) + (heatmap[[2]][,,3]*0.11)
+  
+  plot(rast(flattened), col = gray.colors(256), asp = 1, legend = FALSE, axes = FALSE)
+  plot(rast(heatmap[[3]][,,2]), legend = FALSE, axes = FALSE, col = viridis(256), alpha = 0.4, add = TRUE)
+  text(x = 1, y = 285, labels = name, pos = 4, cex = 1)
+  text(x = 1, y = 270, labels = p, pos = 4, cex = 1)
+}
+```

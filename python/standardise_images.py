@@ -63,7 +63,7 @@ def standardise_image(in_path, out_path, size=299):
     
     # Resize - changes the aspect ratio
     img = img.resize((size, size))
-    img = img.convert('RGB')
+    # img = img.convert('RGB')
     
     img.save(out_path)
 
@@ -92,7 +92,7 @@ def reorg_folders(in_path, out_path, index_file, label_name):
     '''
     
     # spreadsheet columns
-    COLUMNS = ['file', 'country', 'genus', 'species' , 'fullName', 'accessionNumber', 'view', 'project']
+    COLUMNS = ['file', 'country', 'genus', 'species' , 'fullName', 'fullName2', 'fullName3', 'accessionNumber', 'view', 'project']
     filename_col = 0
     label_col = COLUMNS.index(label_name)
     
@@ -156,23 +156,23 @@ def main():
     # standardise_image(IN_PATH, OUT_PATH, size=299)
     
     # Standardise all images
-    # IN_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/images_raw/UNZspecies"
-    # OUT_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_unk/"
+    # IN_PATH = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/img_raw"
+    # OUT_PATH = "C:/Users/HarmerA/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_standardised"
     # standardise_images(IN_PATH, OUT_PATH, size=299)
 
     # Reorganise the images into class folders
-    IN_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_unk"
-    OUT_PATH = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_unk_sort/"
-    INDEX_FILE = "C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/fruitfly_annotationfile_unk.csv"
-    LABEL_NAME = 'fullName'
-    reorg_folders(IN_PATH, OUT_PATH, INDEX_FILE, LABEL_NAME)
+    # IN_PATH = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_standardised"
+    # OUT_PATH = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_sorted"
+    # INDEX_FILE = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/labels/fruitfly_annotationfile.csv"
+    # LABEL_NAME = 'fullName2'
+    # reorg_folders(IN_PATH, OUT_PATH, INDEX_FILE, LABEL_NAME)
     
     # # Create a 2/3 - 1/3 fold
-    # IN_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_sort'
-    # OUT_PATH = 'C:/Users/harmera/OneDrive - MWLR/Documents/data/tephritidML/img_fold/1'
-    # FOLDS = 3
-    # FOLD = 1
-    # create_fold(IN_PATH, OUT_PATH, FOLDS, FOLD)    
+    IN_PATH = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_sorted'
+    OUT_PATH = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_folds/1'
+    FOLDS = 3
+    FOLD = 1
+    create_fold(IN_PATH, OUT_PATH, FOLDS, FOLD)    
     
     
 if (__name__ == '__main__'):

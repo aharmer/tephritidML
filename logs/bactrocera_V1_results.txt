@@ -1,0 +1,22 @@
+ACTUAL/PREDICTED         	austrotephritis	bactrocera_curcubitae	bactrocera_distincta	bactrocera_dorsalis	bactrocera_facialis	bactrocera_frauenfeldi	bactrocera_kirki	bactrocera_melanotus	bactrocera_passiflorae	bactrocera_psidii	bactrocera_tryoni	bactrocera_umbrosus	bactrocera_xanthodes	ceratitis	procecidochares	sphenella	trupanea	urophora	RECALL
+austrotephritis               	47	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0.979
+bactrocera_curcubitae         	0	18	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.947
+bactrocera_distincta          	0	0	36	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+bactrocera_dorsalis           	0	0	0	28	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0.966
+bactrocera_facialis           	0	0	0	0	20	0	1	0	4	0	0	0	0	0	0	0	1	0	0.769
+bactrocera_frauenfeldi        	0	0	0	0	0	20	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+bactrocera_kirki              	0	0	0	0	0	0	15	1	0	0	1	0	0	0	0	0	0	0	0.882
+bactrocera_melanotus          	0	0	0	0	0	0	0	23	0	0	0	0	1	0	0	0	0	0	0.958
+bactrocera_passiflorae        	0	0	0	0	2	0	0	0	17	0	2	0	2	0	0	0	0	0	0.739
+bactrocera_psidii             	0	0	0	0	0	1	0	0	0	2	0	0	1	0	0	0	0	0	0.500
+bactrocera_tryoni             	0	0	0	1	0	0	0	0	1	0	15	0	0	0	0	0	0	0	0.882
+bactrocera_umbrosus           	0	0	0	0	0	0	0	0	0	0	0	19	0	0	0	0	0	0	1.000
+bactrocera_xanthodes          	0	0	0	0	0	0	0	0	1	0	0	0	27	0	0	0	0	0	0.964
+ceratitis                     	0	0	0	0	0	0	0	0	0	0	0	0	0	32	0	0	0	0	1.000
+procecidochares               	0	0	0	0	0	0	0	0	0	0	0	0	0	0	19	0	0	0	1.000
+sphenella                     	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	10	0	0	1.000
+trupanea                      	2	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	469	0	0.996
+urophora                      	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	28	1.000
+PRECISION                	0.959	1.000	1.000	0.966	0.909	0.952	0.938	0.958	0.680	1.000	0.833	1.000	0.871	1.000	1.000	1.000	0.996	1.000
+
+correct: 845 (97.13%) incorrect: 25
