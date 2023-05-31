@@ -119,32 +119,34 @@ def main():
     model_dir = DATASET_PATH + 'models/'
     log_dir = DATASET_PATH + 'logs/'
     model_name = 'Xception'
-    labels_path = DATASET_PATH + 'labels/labels2.csv'
-    confusion_results = log_dir + 'bactrocera_V2_results.txt'
+    labels_path = DATASET_PATH + 'labels/labels3.csv'
+    confusion_results = log_dir + 'trupanea_v3_full_results.txt'
 
-    for i in range(1,4):
-        dataset_name = 'bactrocera_v2_{}'.format(i)
-        images_path = DATASET_PATH + 'img/bactrocera_model/img_folds/{}/'.format(i)
-        train_data_dir = images_path + 'train/'
-        valid_data_dir = images_path + 'val/'
-        ft.retrain(model_name, train_data_dir, valid_data_dir, model_dir, log_dir, dataset_name)
+    # for i in range(1,4):
+    #     dataset_name = 'trupanea_V1_{}'.format(i)
+    #     images_path = DATASET_PATH + 'img/trupanea_model/img_folds/{}/'.format(i)
+    #     train_data_dir = images_path + 'train/'
+    #     valid_data_dir = images_path + 'val/'
+    #     ft.retrain(model_name, train_data_dir, valid_data_dir, model_dir, log_dir, dataset_name)
     
-    results = []
-    for i in range(1,4):
-        model_file = model_dir + 'bactrocera_v2_{}_Xception_transfer.h5'.format(i)
-        images_path = DATASET_PATH + 'img/bactrocera_model/img_folds/{}/'.format(i)
-        test_data_dir = images_path + 'val/'
+    # results = []
+    # for i in range(1,4):
+    #     model_file = model_dir + 'bactrocera_V2_{}_Xception_transfer.h5'.format(i)
+    #     images_path = DATASET_PATH + 'img/bactrocera_model/img_folds/{}/'.format(i)
+    #     test_data_dir = images_path + 'val/'
     
-        _, answers = ft.test_model(model_file, labels_path, test_data_dir, model_name)
-        results += answers
+    #     _, answers = ft.test_model(model_file, labels_path, test_data_dir, model_name)
+    #     results += answers
     
-    confusion(results, confusion_results)
+    # confusion(results, confusion_results)
     
-    # train_data_dir = 'C:/Users/HarmerA/OneDrive - MWLR/Documents/data/tephritidML/img_sort'
-    # dataset_name = 'tephritid_species_v3_final'
-    # ft.retrain_final(model_name, train_data_dir, model_dir, log_dir, dataset_name)
+    # Train a full final model (without folds)
+    train_data_dir = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/trupanea_model/img_sorted'
+    dataset_name = 'trupanea_v3_full'
+    ft.retrain_final(model_name, train_data_dir, model_dir, log_dir, dataset_name)
     
-    # model_path = model_dir + 'tephritid_species_v3_final_Xception_transfer.h5'
+    # Predict IDs of new images not used for training
+    # model_path = model_dir + 'trupanea_v1_final_Xception_transfer.h5'
     # test_images_path = DATASET_PATH + 'img_unk_sort/'
     # preds = ft.predict_new(model_path, labels_path, test_images_path, model_name)
   

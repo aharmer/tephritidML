@@ -161,17 +161,17 @@ def main():
     # standardise_images(IN_PATH, OUT_PATH, size=299)
 
     # Reorganise the images into class folders
-    # IN_PATH = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_standardised"
-    # OUT_PATH = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_sorted"
+    # IN_PATH = "C:/Users/HarmerA/OneDrive - MWLR/repos/tephritidML/img/trupanea_model/img_standardised"
+    # OUT_PATH = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/trupanea_model/img_sorted"
     # INDEX_FILE = "C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/labels/fruitfly_annotationfile.csv"
-    # LABEL_NAME = 'fullName2'
+    # LABEL_NAME = 'fullName3'
     # reorg_folders(IN_PATH, OUT_PATH, INDEX_FILE, LABEL_NAME)
     
     # # Create a 2/3 - 1/3 fold
-    IN_PATH = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_sorted'
-    OUT_PATH = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/bactrocera_model/img_folds/1'
+    IN_PATH = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/trupanea_model/img_sorted'
+    OUT_PATH = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/trupanea_model/img_folds/3'
     FOLDS = 3
-    FOLD = 1
+    FOLD = 3
     create_fold(IN_PATH, OUT_PATH, FOLDS, FOLD)    
     
     
