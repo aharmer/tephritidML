@@ -129,21 +129,21 @@ def main():
     #     valid_data_dir = images_path + 'val/'
     #     ft.retrain(model_name, train_data_dir, valid_data_dir, model_dir, log_dir, dataset_name)
     
-    # results = []
-    # for i in range(1,4):
-    #     model_file = model_dir + 'bactrocera_V2_{}_Xception_transfer.h5'.format(i)
-    #     images_path = DATASET_PATH + 'img/bactrocera_model/img_folds/{}/'.format(i)
-    #     test_data_dir = images_path + 'val/'
+    results = []
+    for i in range(1,4):
+        model_file = model_dir + 'trupanea_V1_{}_Xception_transfer.h5'.format(i)
+        images_path = DATASET_PATH + 'img/trupanea_model/img_folds/{}/'.format(i)
+        test_data_dir = images_path + 'val/'
     
-    #     _, answers = ft.test_model(model_file, labels_path, test_data_dir, model_name)
-    #     results += answers
+        _, answers = ft.test_model(model_file, labels_path, test_data_dir, model_name)
+        results += answers
     
-    # confusion(results, confusion_results)
+    confusion(results, confusion_results)
     
     # Train a full final model (without folds)
-    train_data_dir = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/trupanea_model/img_sorted'
-    dataset_name = 'trupanea_v3_full'
-    ft.retrain_final(model_name, train_data_dir, model_dir, log_dir, dataset_name)
+    # train_data_dir = 'C:/Users/harmera/OneDrive - MWLR/repos/tephritidML/img/trupanea_model/img_sorted'
+    # dataset_name = 'trupanea_v2_full'
+    # ft.retrain_final(model_name, train_data_dir, model_dir, log_dir, dataset_name)
     
     # Predict IDs of new images not used for training
     # model_path = model_dir + 'trupanea_v1_final_Xception_transfer.h5'

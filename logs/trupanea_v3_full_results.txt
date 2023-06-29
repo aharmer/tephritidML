@@ -1,0 +1,17 @@
+ACTUAL/PREDICTED         	austrotephritis	bactrocera	ceratitis	procecidochares	sphenella	trupanea_centralis	trupanea_completa	trupanea_extensa	trupanea_fenwicki	trupanea_longipennis	trupanea_new_species	trupanea_vittigera	urophora	RECALL
+austrotephritis               	49	0	0	0	0	0	0	0	0	0	0	0	0	1.000
+bactrocera                    	0	262	0	0	0	0	0	0	0	0	0	0	0	1.000
+ceratitis                     	0	0	32	0	0	0	0	0	0	0	0	0	0	1.000
+procecidochares               	0	0	1	17	0	0	0	0	0	0	0	0	1	0.895
+sphenella                     	0	0	0	0	10	0	0	0	0	0	0	0	0	1.000
+trupanea_centralis            	0	0	0	0	0	14	5	1	0	0	0	0	0	0.700
+trupanea_completa             	0	0	0	0	0	5	6	2	0	1	0	1	0	0.400
+trupanea_extensa              	0	0	0	0	0	2	1	0	0	1	0	0	0	0.000
+trupanea_fenwicki             	0	0	0	0	0	0	0	0	14	1	0	1	0	0.875
+trupanea_longipennis          	0	0	0	0	0	0	0	0	0	23	1	0	0	0.958
+trupanea_new_species          	0	0	0	0	0	0	0	0	0	1	10	0	0	0.909
+trupanea_vittigera            	1	0	0	0	0	0	0	0	1	1	0	7	0	0.700
+urophora                      	0	0	0	0	0	0	0	0	0	0	0	0	28	1.000
+PRECISION                	0.980	1.000	0.970	1.000	1.000	0.667	0.500	0.000	0.933	0.821	0.909	0.778	0.966
+
+correct: 472 (94.40%) incorrect: 28
